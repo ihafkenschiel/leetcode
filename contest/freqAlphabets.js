@@ -49,7 +49,6 @@ Constraints:
 
 
 */
-
 /**
  * @param {string} s
  * @return {string}
@@ -57,26 +56,27 @@ Constraints:
 var freqAlphabets = function(s) {
   var str = "";
 
-  var arr = s.split("#");
-  console.log(arr.toString());
-
-  for (j=0; j<arr.length; j++) {
-    var cur = Number(arr[j]);
+  // go backwards through array and take 1 at a time
+  // if #, then take 2
+  for (j=s.length-1; j>=0; j--) {
+    var cur = s.charAt(j);
+    var numCur = Number(cur);
     console.log(cur);
-    if ( j != arr.length-1 && cur >= 10 && cur <= 26) {
-      str += String.fromCharCode(96 + cur);
-    } else {
-      var grop = arr[j];
-      for (i=0; i<grop.length; i++) {
-         console.log(Number(grop.charAt(i)));
-         str += String.fromCharCode(96 + Number(grop.charAt(i)));
-       }
+
+    if (cur == "#") {
+      var second = s.charAt(j-1);
+      var first = s.charAt(j-2);
+      var num = first + second;
+      console.log(num);
+      str = String.fromCharCode(96 + Number( num )) + str;
+      j -= 2;
+    } else if ( numCur >= 1 && numCur <= 9) {
+      str = String.fromCharCode(96 + numCur) + str;
     }
   }
-
 
 
     return str;
 };
 
-document.write(freqAlphabets("10#11#12"));
+document.write(freqAlphabets("1326#"));
